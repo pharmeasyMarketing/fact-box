@@ -277,13 +277,12 @@ def generate_facts_box(keyword):
 
 def main():
     st.title("PharmEasy Fact-Box")
-    st.header("Simpy Enter A Keyword and we will provide you facts related to that keyword!!")
+    st.header("Enter A Keyword and see the magic!!")
     keyword = st.text_input("Enter a Keyword")
 
     
     if st.button("Generate Facts"):
         final_facts = generate_facts_box(keyword)
-        st.write("Coming Soon!! We Are Working On It")
 
 if __name__ == '__main__':
     main()
