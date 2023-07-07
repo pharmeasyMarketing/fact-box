@@ -1,2 +1,7 @@
 streamlit
 bs4
+openai
+newspaper3k
+markdownify
+pypandoc
+markdown
