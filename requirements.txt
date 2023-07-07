@@ -5,4 +5,3 @@ newspaper3k
 markdownify
 pypandoc
 markdown
-newspaper
