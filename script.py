@@ -235,9 +235,6 @@ def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature
 
     return response
 
-openai.api_key = "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"
-
-
 def generate_facts_box(keyword):
     concated_keyword = concate_query(keyword)
     scrap_query_df = scrape_google(concated_keyword)
@@ -276,7 +273,7 @@ def generate_facts_box(keyword):
     st.write(facts)
 
 def main():
-    st.title("PharmEasy Fact-Box")
+    st.title("PharmEasy Fact-Box Generator")
     st.header("Enter A Keyword and see the magic!!")
     keyword = st.text_input("Enter a Keyword")
     user_api_key =  st.text_input("Enter Your OPENAI API Key", type="password")
