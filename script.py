@@ -204,7 +204,7 @@ def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature
     - Facts should be staastics based and have numbers in it. 
     # - If a fact is about any research conducted which is clinically not proved, never add that fact.
     - The facts should be arranged in an ordered, numbered list.
-    - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name.
+    - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts..
     - You are strictly prohibited from creating an extra sources section. Instead, hyperlink the URL in the anchor text at the end of each fact.
     '''
 
