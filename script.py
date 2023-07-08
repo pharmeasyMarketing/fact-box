@@ -279,9 +279,15 @@ def main():
     st.title("PharmEasy Fact-Box")
     st.header("Enter A Keyword and see the magic!!")
     keyword = st.text_input("Enter a Keyword")
-
+    user_api_key =  st.text_input("Enter Your OPENAI API Key", type="password")
     
     if st.button("Generate Facts"):
+        if user_api_key:
+            openai.api_key = user_api_key
+            with st.spinner("Generating Facts..."):
+                 final_facts = generate_facts_box(keyword)
+        else:
+            st.warning("Please enter your OpenAI API key above.")        
         final_facts = generate_facts_box(keyword)
 
 if __name__ == '__main__':
