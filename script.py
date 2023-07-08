@@ -285,8 +285,6 @@ def main():
             with st.spinner("Generating Facts..."):
                  final_facts = generate_facts_box(keyword)
         else:
-            st.warning("Please enter your OpenAI API key above.")        
-        final_facts = generate_facts_box(keyword)
-
+            st.warning("Please enter your OpenAI API key above.")
 if __name__ == '__main__':
     main()
