@@ -232,7 +232,7 @@ def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature
         if any(pattern in fact.lower() for pattern in ["million", "%", "billion", "thousands"]) or re.match(r".*\b\d+[\d\w]*\b.*", fact):
             filtered_facts.append(fact)
 
-    filtered_facts = filtered_facts[:10]  # Select only the first 10 filtered facts
+    filtered_facts = filtered_facts[:20]  # Select only the first 10 filtered facts
     response = "\n".join(filtered_facts)  # Join the selected facts into a single string
 
     return response
