@@ -241,7 +241,8 @@ def generate_facts_box(keyword, num_facts):
     concated_keyword = concate_query(keyword)
     scrap_query_df = scrape_google(concated_keyword)
     filtered_url_df = filtered_url(scrap_query_df)
-
+    num_facts = num_facts
+    
     for index, row in filtered_url_df.iterrows():
         url = row["Filtered Url"]
         try:
