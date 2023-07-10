@@ -168,7 +168,7 @@ def pubmed_article_scrap(url):
 
 
 
-def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-16k", max_tokens=3000, temperature=0.2):
+def generate_facts(list_of_article, topic, num_facts model="gpt-3.5-turbo-16k", max_tokens=3000, temperature=0.2):
     if len(list_of_article) > 15500:
         # Split the list_of_article into three parts
         part_length = len(list_of_article) // 3
@@ -177,9 +177,9 @@ def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-16k", max_tokens
         list_of_article_part3 = list_of_article[2*part_length:]
         
         # Generate facts for each part
-        response_part1 = generate_facts_helper(list_of_article_part1, topic, model, max_tokens, temperature)
-        response_part2 = generate_facts_helper(list_of_article_part2, topic, model, max_tokens, temperature)
-        response_part3 = generate_facts_helper(list_of_article_part3, topic, model, max_tokens, temperature)
+        response_part1 = generate_facts_helper(list_of_article_part1, topic, num_facts, model, max_tokens, temperature)
+        response_part2 = generate_facts_helper(list_of_article_part2, topic, num_facts, model, max_tokens, temperature)
+        response_part3 = generate_facts_helper(list_of_article_part3, topic, num_facts, model, max_tokens, temperature)
         
         # Combine the responses
         response = response_part1 + response_part2 + response_part3
@@ -195,9 +195,9 @@ import openai
 import re
 import openai
 
-def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature):
+def generate_facts_helper(list_of_article, topic, num_facts, model, max_tokens, temperature):
     prompt = '''
-    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 50 crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
+    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out {num_facts} crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
     - Shorten and keep the points crisp and strictly under 15 words.
@@ -237,7 +237,7 @@ def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature
 
     return response
 
-def generate_facts_box(keyword):
+def generate_facts_box(keyword, num_facts):
     concated_keyword = concate_query(keyword)
     scrap_query_df = scrape_google(concated_keyword)
     filtered_url_df = filtered_url(scrap_query_df)
@@ -266,7 +266,7 @@ def generate_facts_box(keyword):
 
     # st.write(article_text_list)
     # st.write(article_text_list)
-    facts = generate_facts(article_text_list, concated_keyword)
+    facts = generate_facts(article_text_list, concated_keyword, num_facts)
     
 
 
@@ -279,12 +279,12 @@ def main():
     st.header("Enter A Keyword and see the magic!!")
     keyword = st.text_input("Enter a Keyword")
     user_api_key =  st.text_input("Enter Your OPENAI API Key", type="password")
-    
+    num_facts = st.text_input("Enter desired number of facts")
     if st.button("Generate Facts"):
         if user_api_key:
             openai.api_key = user_api_key
             with st.spinner("Generating Facts..."):
-                 final_facts = generate_facts_box(keyword)
+                 final_facts = generate_facts_box(keyword, num_facts)
         else:
             st.warning("Please enter your OpenAI API key above.")
 if __name__ == '__main__':
