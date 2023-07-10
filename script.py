@@ -166,8 +166,6 @@ def pubmed_article_scrap(url):
 #     response = response
 #     return response
 
-
-
 def generate_facts(list_of_article, topic, num_facts, model="gpt-3.5-turbo-16k", max_tokens=3000, temperature=0.2):
     if len(list_of_article) > 15500:
         # Split the list_of_article into three parts
