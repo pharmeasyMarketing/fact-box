@@ -7,10 +7,7 @@ import urllib.parse
 from newspaper import Article
 import openai
 
-
 pd.set_option("display.max_colwidth", None)
-
-
 
 def concate_query(keyword):
     return keyword + " Facts and statistics in Umited states"
@@ -283,6 +280,7 @@ def main():
         if user_api_key:
             openai.api_key = user_api_key
             with st.spinner("Generating Facts..."):
+                st.write(num_facts)
                  final_facts = generate_facts_box(keyword, num_facts)
         else:
             st.warning("Please enter your OpenAI API key above.")
