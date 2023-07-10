@@ -280,7 +280,7 @@ def main():
         if user_api_key:
             openai.api_key = user_api_key
             with st.spinner("Generating Facts..."):
-                st.write(num_facts)
+                 st.write(num_facts)
                  final_facts = generate_facts_box(keyword, num_facts)
         else:
             st.warning("Please enter your OpenAI API key above.")
