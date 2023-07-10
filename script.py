@@ -197,12 +197,12 @@ import openai
 
 def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature):
     prompt = '''
-    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 15 crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
+    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 20 crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
     - Shorten and keep the points crisp and strictly under 15 words.
-    - Facts should be taken from all the listed articles. It should not be taken from single list.
-    - Facts should be staastics based and have numbers in it. 
+    - Facts should be taken from all the sources not from only single sources. It should not be taken from single list.
+    - Facts should be stastics based and have numbers in it. 
     # - If a fact is about any research conducted which is clinically not proved, never add that fact.
     - The facts should be arranged in an ordered, numbered list.
     - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts..
