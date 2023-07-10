@@ -133,7 +133,7 @@ def pubmed_article_scrap(url):
         return ""
 
 
-# def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-32k", max_tokens=500, temperature=0.2):
+# def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-32k", max_tokens=1000, temperature=0.2):
 
 #     prompt = f'''
 #     You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 10 significant data-driven facts pertaining to the provided topic. Each fact needs to be brief, straightforward, and formatted as a one-liner. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
