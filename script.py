@@ -276,7 +276,7 @@ def main():
     st.header("Enter A Keyword and see the magic!!")
     keyword = st.text_input("Enter a Keyword")
     user_api_key =  st.text_input("Enter Your OPENAI API Key", type="password")
-    num_facts = st.text_input("Enter desired number of facts")
+    num_facts = st.number_input("Enter a number", min_value=0, max_value=100, value=50, step=1)
     if st.button("Generate Facts"):
         if user_api_key:
             openai.api_key = user_api_key
