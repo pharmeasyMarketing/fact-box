@@ -168,7 +168,7 @@ def pubmed_article_scrap(url):
 
 
 
-def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-16k", max_tokens=1500, temperature=0.2):
+def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-16k", max_tokens=4000, temperature=0.2):
     if len(list_of_article) > 15500:
         # Split the list_of_article into three parts
         part_length = len(list_of_article) // 3
@@ -197,7 +197,7 @@ import openai
 
 def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature):
     prompt = '''
-    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 20 crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
+    You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out 50 crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
     - Shorten and keep the points crisp and strictly under 15 words.
