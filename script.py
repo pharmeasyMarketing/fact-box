@@ -225,15 +225,15 @@ def generate_facts_helper(list_of_article, topic, model, max_tokens, temperature
     )
 
     response = gpt_response["choices"][0]["message"]["content"].strip()
-    response = response.split("\n")  # Split the response by lines
+    # response = response.split("\n")  # Split the response by lines
 
-    filtered_facts = []
-    for fact in response:
-        if any(pattern in fact.lower() for pattern in ["million", "%", "billion", "thousands"]) or re.match(r".*\b\d+[\d\w]*\b.*", fact):
-            filtered_facts.append(fact)
+    # filtered_facts = []
+    # for fact in response:
+    #     if any(pattern in fact.lower() for pattern in ["million", "%", "billion", "thousands"]) or re.match(r".*\b\d+[\d\w]*\b.*", fact):
+    #         filtered_facts.append(fact)
 
-    filtered_facts = filtered_facts[:20]  # Select only the first 10 filtered facts
-    response = "\n".join(filtered_facts)  # Join the selected facts into a single string
+    # filtered_facts = filtered_facts[:20]  # Select only the first 10 filtered facts
+    # response = "\n".join(filtered_facts)  # Join the selected facts into a single string
 
     return response
 
