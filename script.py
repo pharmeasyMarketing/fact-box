@@ -202,7 +202,7 @@ def generate_facts_helper(list_of_article, topic, num_facts, model, max_tokens, 
     - Facts should be stastics based and have numbers in it. 
     - The facts should be arranged in an ordered, numbered list.
     - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts.
-    - Please strictly remember that hyperlink should be nofollow links.
+    - The source link should be with nofollow tag. Please follow this strictly. example: <li>Home pregnancy tests are about 97-99% accurate if instructions are followed carefully. <a href="https://www.cdc.gov/nchs/fastats/births.htm" target="_blank" rel="noreferrer noopener nofollow">source: CDC</a></li>
     '''
 
     gpt_response = openai.ChatCompletion.create(
