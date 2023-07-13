@@ -88,7 +88,8 @@ def filtered_url(df):
     "https://www.nhs.uk/",
     "https://hints.cancer.gov/",
     ".gov",
-    "https://www.ahrq.gov/"
+    "https://www.ahrq.gov/",
+    "https://www.statista.com/"
     ]
 
     # flag = 0
