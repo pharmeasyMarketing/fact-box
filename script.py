@@ -146,11 +146,11 @@ def pubmed_article_scrap(url):
     try:
         content = get_article(url)
         soup = BeautifulSoup(content, 'html.parser')
-        p_tags = soup.find_all('p')
-        text_content = [tag.get_text() for tag in p_tags]
-        return text_content
+        text = soup.find_all('p')
+        # text = [tag.get_text() for tag in p_tags]
+        return text
     except:
-        return ""
+        return "Access Blocked"
 
 
 # def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-32k", max_tokens=1000, temperature=0.2):
