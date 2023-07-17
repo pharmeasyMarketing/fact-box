@@ -140,19 +140,15 @@ USER_AGENTS = [
     'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Mobile Safari/537.36',
 ]
 
-
-
 def pubmed_article_scrap(url):
     try:
-        content = get_article("https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3129121/")
+        content = get_article(url)
         soup = BeautifulSoup(content, 'html.parser')
-        text = soup.find_all('p')
         text = [p.get_text() for p in soup.find_all('p')]
         text = '\n'.join(text)
-        st.write(url)
         return text
     except:
-        return "Access Blocked"
+        return ""
 
 
 # def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-32k", max_tokens=1000, temperature=0.2):
