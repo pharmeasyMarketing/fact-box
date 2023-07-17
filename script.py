@@ -120,11 +120,33 @@ def scrape_article(url):
     except:
         return ""
 
+def get_article(url):
+    response = requests.get(url)
+    if response.status_code == 403:
+        # We've been forbidden, so try a few different things
+        for i in range(10):
+            user_agent = random.choice(USER_AGENTS)
+            response = requests.get(url, headers={'User-Agent': user_agent})
+            if response.status_code == 200:
+                return response.content
+    elif response.status_code != 200:
+        # Something else went wrong
+        raise Exception('Error getting article: {}'.format(response.status_code))
+    return response.content
+
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
+    'Mozilla/5.0 (Linux; Android 10; Pixel 3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Mobile Safari/537.36',
+]
+
+
+
 def pubmed_article_scrap(url):
     try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        p_tags = soup.find_all('body')
+        content = get_article(url)
+        soup = BeautifulSoup(content, 'html.parser')
+        p_tags = soup.find_all('p')
         text_content = [tag.get_text() for tag in p_tags]
         return text_content
     except:
