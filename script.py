@@ -124,7 +124,7 @@ def pubmed_article_scrap(url):
     try:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        p_tags = soup.find_all('p')
+        p_tags = soup.find_all('body')
         text_content = [tag.get_text() for tag in p_tags]
         return text_content
     except:
