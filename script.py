@@ -147,7 +147,8 @@ def pubmed_article_scrap(url):
         content = get_article(url)
         soup = BeautifulSoup(content, 'html.parser')
         text = soup.find_all('p')
-        # text = [tag.get_text() for tag in p_tags]
+        text = [p.get_text() for p in soup.find_all('p')]
+        text = '\n'.join(text)
         return text
     except:
         return "Access Blocked"
