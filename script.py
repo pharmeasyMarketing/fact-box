@@ -144,11 +144,11 @@ USER_AGENTS = [
 
 def pubmed_article_scrap(url):
     try:
-        content = get_article(url)
+        content = get_article("https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3129121/")
         soup = BeautifulSoup(content, 'html.parser')
         text = soup.find_all('p')
-        # text = [p.get_text() for p in soup.find_all('p')]
-        # text = '\n'.join(text)
+        text = [p.get_text() for p in soup.find_all('p')]
+        text = '\n'.join(text)
         st.write(url)
         return text
     except:
