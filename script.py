@@ -6,6 +6,7 @@ import pandas as pd
 import urllib.parse
 from newspaper import Article
 import openai
+import random
 
 pd.set_option("display.max_colwidth", None)
 
