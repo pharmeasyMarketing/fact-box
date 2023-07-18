@@ -119,7 +119,7 @@ def scrape_article(url):
         article.parse()
         return article.text
     except:
-        return ""
+        return "Access denied"
 
 def get_article(url):
     response = requests.get(url)
