@@ -151,7 +151,7 @@ def pubmed_article_scrap(url):
         # text = '\n'.join(text)
         return text
     except:
-        return ""
+        return " Access denied"
 
 
 # def generate_facts(list_of_article, topic, model="gpt-3.5-turbo-32k", max_tokens=1000, temperature=0.2):
