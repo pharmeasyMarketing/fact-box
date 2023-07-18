@@ -121,20 +121,29 @@ def scrape_article(url):
     except:
         return "Access denied"
 
-def get_article(url):
-    response = requests.get(url)
-    if response.status_code == 403:
-        # We've been forbidden, so try a few different things
-        for i in range(10):
-            user_agent = random.choice(USER_AGENTS)
-            response = requests.get(url, headers={'User-Agent': user_agent})
-            if response.status_code == 200:
-                return response.content
-    elif response.status_code != 200:
-        # Something else went wrong
-        raise Exception('Error getting article: {}'.format(response.status_code))
-    return response.content
+# def get_article(url):
+#     response = requests.get(url)
+#     if response.status_code == 403:
+#         # We've been forbidden, so try a few different things
+#         for i in range(10):
+#             user_agent = random.choice(USER_AGENTS)
+#             response = requests.get(url, headers={'User-Agent': user_agent})
+#             if response.status_code == 200:
+#                 return response.content
+#     elif response.status_code != 200:
+#         # Something else went wrong
+#         raise Exception('Error getting article: {}'.format(response.status_code))
+#     return response.content
 
+def get_article(url):
+    headers = {'User-Agent': random.choice(USER_AGENTS)}
+    for _ in range(10):
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            text_content = soup.get_text()
+            return text_content
+    raise Exception('Error getting article: {}'.format(response.status_code))
 
 
 USER_AGENTS = [
@@ -268,7 +277,7 @@ def generate_facts_box(keyword, num_facts):
         url = row["Filtered Url"]
         try:
             if "ncbi.nlm.nih.gov" in url:
-                article_text = pubmed_article_scrap(url)
+                article_text = get_article(url)
             else:
                 article_text = scrape_article(url)
                 
