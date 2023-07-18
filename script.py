@@ -147,6 +147,7 @@ def pubmed_article_scrap(url):
         soup = BeautifulSoup(content, 'html.parser')
         text = [p.get_text() for p in soup.find_all('p')]
         text = '\n'.join(text)
+        print(text)
         return text
     except:
         return ""
@@ -189,7 +190,7 @@ def pubmed_article_scrap(url):
 def generate_facts(list_of_article, topic, num_facts, model="gpt-3.5-turbo-16k", max_tokens=200, temperature=0.2):
     if len(list_of_article) > 14000:
         # Split the list_of_article into three parts
-        part_length = len(list_of_article) // 10
+        part_length = len(list_of_article) // 3
         list_of_article_part1 = list_of_article[:part_length]
         list_of_article_part2 = list_of_article[part_length:2*part_length]
         list_of_article_part3 = list_of_article[2*part_length:]
