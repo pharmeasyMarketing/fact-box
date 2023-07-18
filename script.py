@@ -147,7 +147,7 @@ def pubmed_article_scrap(url):
         soup = BeautifulSoup(content, 'html.parser')
         text = [p.get_text() for p in soup.find_all('p')]
         text = '\n'.join(text)
-        print(text)
+        st.write(text)
         return text
     except:
         return ""
