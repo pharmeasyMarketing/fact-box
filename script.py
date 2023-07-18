@@ -265,7 +265,7 @@ def generate_facts_box(keyword, num_facts):
         url = row["Filtered Url"]
         try:
             if "ncbi.nlm.nih.gov" in url:
-                article_text = pubmed_article_scrap(url)
+                article_text = get_article(url)
             else:
                 article_text = scrape_article(url)
                 
