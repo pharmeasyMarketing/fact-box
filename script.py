@@ -207,12 +207,11 @@ def generate_facts(list_of_article, topic, num_facts, model="gpt-3.5-turbo-16k",
         
         # Generate facts for each part
         response_part1 = generate_facts_helper(list_of_article_part1, topic, num_facts, model, max_tokens, temperature)
-        # response_part2 = generate_facts_helper(list_of_article_part2, topic, num_facts, model, max_tokens, temperature)
-        # response_part3 = generate_facts_helper(list_of_article_part3, topic, num_facts, model, max_tokens, temperature)
+        response_part2 = generate_facts_helper(list_of_article_part2, topic, num_facts, model, max_tokens, temperature)
+        response_part3 = generate_facts_helper(list_of_article_part3, topic, num_facts, model, max_tokens, temperature)
         
         # Combine the responses
-        response = response_part1 
-        # + response_part2 + response_part3
+        response = response_part1 + response_part2 + response_part3
     else:
         response = generate_facts_helper(list_of_article, topic, num_facts, model, max_tokens, temperature)
     
