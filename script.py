@@ -121,29 +121,21 @@ def scrape_article(url):
     except:
         return ""
 
-# def get_article(url):
-#     response = requests.get(url)
-#     if response.status_code == 403:
-#         # We've been forbidden, so try a few different things
-#         for i in range(10):
-#             user_agent = random.choice(USER_AGENTS)
-#             response = requests.get(url, headers={'User-Agent': user_agent})
-#             if response.status_code == 200:
-#                 return response.content
-#     elif response.status_code != 200:
-#         # Something else went wrong
-#         raise Exception('Error getting article: {}'.format(response.status_code))
-#     return response.content
-
 def get_article(url):
-    headers = {'User-Agent': random.choice(USER_AGENTS)}
-    for _ in range(10):
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
-            text_content = soup.get_text()
-            return text_content
-    raise Exception('Error getting article: {}'.format(response.status_code))
+    response = requests.get(url)
+    if response.status_code == 403:
+        # We've been forbidden, so try a few different things
+        for i in range(10):
+            user_agent = random.choice(USER_AGENTS)
+            response = requests.get(url, headers={'User-Agent': user_agent})
+            if response.status_code == 200:
+                return response.content
+    elif response.status_code != 200:
+        # Something else went wrong
+        raise Exception('Error getting article: {}'.format(response.status_code))
+    return response.content
+
+
 
 USER_AGENTS = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -156,7 +148,7 @@ def pubmed_article_scrap(url):
         content = get_article(url)
         soup = BeautifulSoup(content, 'html.parser')
         text = [p.get_text() for p in soup.find_all('p')]
-        text = '\n'.join(text)
+        # text = '\n'.join(text)
         st.write(text)
         return text
     except:
