@@ -155,12 +155,13 @@ def count_tokens( list_of_article, topic, num_facts):
     You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out {num_facts} crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
+    - Never create any fact from outside the list, also, please avoide mentioning source randomly. Make sure sources should be taken from the shared list of artciles. not from anywhere. else.
     - Shorten and keep the points crisp and strictly under 15 words.
     - Get gacts from each list of article. not rely only on one or two source, for example, if 10 sources are present try to get facts from each sources. 
     - Facts should be stastics based and have numbers in it. 
     - The facts should be arranged in an ordered, numbered list.
-    - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts.
-    - The source link should be with nofollow tag. Please follow this strictly. example: <li>Home pregnancy tests are about 97-99% accurate if instructions are followed carefully. <a href="https://www.cdc.gov/nchs/fastats/births.htm" target="_blank" rel="noreferrer noopener nofollow">source: CDC</a></li>
+    - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts, also please avoide mentioning source randomly. Make sure sources should be taken from the shared list of artciles not from anywhere else.
+    - The source link should be with nofollow tag. Please follow this strictly. example: <li>Home pregnancy tests are about 97-99% accurate if instructions are followed carefully. <a href="https://www.cdc.gov/nchs/fastats/births.htm" target="_blank" rel="noreferrer noopener nofollow">source: CDC</a></li>, 
     '''
     tokens = nltk.word_tokenize(prompt)
     return len(tokens)
@@ -268,7 +269,7 @@ def generate_facts(list_of_article, topic, num_facts, model="gpt-3.5-turbo-16k",
         # st.write(response3)
 
         total = response1 + response2 + response3
-        st.write(total)
+        # st.write(total)
         # st.write("final response")
         # st.write(type(response))
         # st.write(response)
