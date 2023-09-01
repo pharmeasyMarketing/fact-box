@@ -155,6 +155,8 @@ def count_tokens( list_of_article, topic, num_facts):
     You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out {num_facts} crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
+    - Facts should be- only related to topic:{topic}. Please don't show any facts if it's not around the topic, but don't give the random facts
+    - while creating or listing the facts give first priority to pubmed, ncbi and other .gov websites.
     - Never create any fact from outside the list, also, please avoide mentioning source randomly. Make sure sources should be taken from the shared list of artciles. not from anywhere. else.
     - Shorten and keep the points crisp and strictly under 15 words.
     - Get gacts from each list of article. not rely only on one or two source, for example, if 10 sources are present try to get facts from each sources. 
@@ -287,12 +289,15 @@ def generate_facts(list_of_article, topic, num_facts, model="gpt-3.5-turbo-16k",
 def filter_response(response_list, topic, num_facts, model="gpt-3.5-turbo-16k", max_tokens=1000, temperature=0.2):
 
     prompt = f'''We have a list of facts that require filtering. Your task is to randomly extract {num_facts} facts from the given list that are more suitable for the topic: "{topic}". Please adhere to the following guidelines:
-
+    - Facts should be- only related to topic:{topic}. Please don't show any facts if it's not around the topic, but don't give the random facts
+    - while creating or listing the facts give first priority to pubmed, ncbi and other .gov websites.
     - Preserve the original wording of the facts; do not rewrite them. Simply select and filter {num_facts} facts from the list.
     - While filtering, randomly choose facts that are relevant to the topic: "{topic}". Ensure that the facts come from different sources,rather than a single source, but it should not go against the given data if in given data multiple sources are not available then never add random sources by your own. You can identify the different sources by looking for the "source: [source name]" at the end of each fact.
     - Retain any links present in the facts. If possible, add the "nofollow" attribute to the links.
-
-    Here is the fact list for reference: {response_list}.'''
+    Here is the fact list for reference: {response_list}.
+   
+]
+    '''
 
     gpt_response = openai.ChatCompletion.create(
         model=model,
@@ -320,12 +325,15 @@ def generate_facts_helper(list_of_article, topic, num_facts, model="gpt-3.5-turb
     You are a specialized medical researcher or practitioner. A collection of articles titled '{list_of_article}' that delve into the subject matter of '{topic}' has been handed to you. Each article comes with the web page source from which the data has been procured. Your role involves conducting a detailed review and comprehension of these articles, discarding any superfluous information, and subsequently drawing out {num_facts} crisp facts to the provided topic. Each fact needs to be straightforward, and formatted under 15 words. These facts are to be organized in a numbered list with the accompanying source link for each fact, denoting the domain name of the source website.
 
     Guidelines:
+    - Facts should be- only related to topic:{topic}. Please don't show any facts if it's not around the topic, but don't give the random facts.
+    - while creating or listing the facts give first priority to pubmed, ncbi and other .gov websites.
     - Shorten and keep the points crisp and strictly under 15 words.
     - Get gacts from each list of article. not rely only on one or two source, for example, if 10 sources are present try to get facts from each sources. 
     - Facts should be stastics based and have numbers in it. 
     - The facts should be arranged in an ordered, numbered list.
     - Each fact should include the source in the format '[source: [domain_name](URL)]'. Replace 'domain_name' with the actual domain name from the list of articles, and 'URL' with the complete URL from the article list. The source should be hyperlinked with the anchor text representing the source name, never create new list to show source, only hyperlink them in the anchor text at the end of each facts.
     - The source link should be with nofollow tag. Please follow this strictly. example: <li>Home pregnancy tests are about 97-99% accurate if instructions are followed carefully. <a href="https://www.cdc.gov/nchs/fastats/births.htm" target="_blank" rel="noreferrer noopener nofollow">source: CDC</a></li>
+    
     '''
 
     gpt_response = openai.ChatCompletion.create(
@@ -357,6 +365,45 @@ def generate_facts_helper(list_of_article, topic, num_facts, model="gpt-3.5-turb
     
     # st.write(num_facts)
     return response
+
+
+def filter_final_response(response):
+
+    websites = [
+    "healthline",
+    "medicalnewstoday",
+    "verywellhealth",
+    "mayoclinic",
+    "webmd",
+    "womenshealthmag",
+    "stylecraze",
+    "timesofindia.indiatimes",
+    "food.ndtv",
+    "thespruceeats",
+    "organicfacts",
+    "healthbenefitstimes",
+    "ayurveda-foryou"
+]
+    
+    filtered_final_response_list = []
+    response_string_list = response.split('\n')
+    # st.write(response_string_list)
+    for fact in response_string_list:
+
+        contains_keyword = False
+
+        for website in websites:
+            if website in fact:
+                contains_keyword = True
+                # st.write("true")
+                break
+
+        if not contains_keyword:
+            filtered_final_response_list.append(fact)
+                
+
+    return '\n'.join(filtered_final_response_list)
+
 
 def generate_facts_box(keyword, num_facts):
     concated_keyword = concate_query(keyword)
@@ -390,12 +437,21 @@ def generate_facts_box(keyword, num_facts):
     # st.write(article_text_list)
     
     st.write(filtered_url_df)
+
+
+
     token_count = count_tokens(article_text_list, concated_keyword, num_facts)
-    st.write(token_count)
+    # st.write(token_count)
 
 
     facts = generate_facts(article_text_list, concated_keyword, num_facts)
+
     st.write(facts)
+    filtered_fact = filter_final_response(facts)
+
+    st.header("Filtered facts")
+    st.write(filtered_fact)
+
 
 def main():
     st.title("PharmEasy Fact-Box Generator")
@@ -410,5 +466,6 @@ def main():
                  generate_facts_box(keyword, num_facts)
         else:
             st.warning("Please enter your OpenAI API key above.")
+
 if __name__ == '__main__':
     main()
