@@ -446,7 +446,7 @@ def generate_facts_box(keyword, num_facts):
 
     facts = generate_facts(article_text_list, concated_keyword, num_facts)
 
-    st.write(facts)
+    # st.write(facts)
     filtered_fact = filter_final_response(facts)
 
     st.header("Filtered facts")
