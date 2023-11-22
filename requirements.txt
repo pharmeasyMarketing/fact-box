@@ -1,6 +1,6 @@
 streamlit
 bs4
-openai
+openai==0.28
 newspaper3k
 markdownify
 pypandoc
