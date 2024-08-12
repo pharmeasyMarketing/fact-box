@@ -11,7 +11,7 @@ import openai
 import random
 
 import nltk
-nltk.download('punkt')
+nltk.download('punkt_tab')
 
 pd.set_option("display.max_colwidth", None)
 
